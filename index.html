@@ -1,208 +1,194 @@
-
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Engelmig — Gestão de Manutenção</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--eng-yellow:#F5C400;--eng-red:#D32F2F;--eng-green:#2E7D32;--eng-dark:#1a2a4a;--sw:200px}
-body{font-family:var(--font-sans);font-size:13px;color:#333;background:transparent}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--eng-yellow:#F5C400;--eng-red:#D32F2F;--eng-green:#2E7D32;--eng-dark:#1a2a4a;--sw:220px}
+html,body{height:100%;min-height:100vh;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;font-size:14px;color:#333;background:#f4f6f9;overflow-x:hidden}
 .hidden{display:none!important}
-.app{display:flex;min-height:660px;border-radius:8px;overflow:hidden;border:1px solid #ddd}
 
-/* SIDEBAR */
-.sidebar{width:var(--sw);background:var(--eng-dark);display:flex;flex-direction:column;flex-shrink:0}
+/* LOGIN */
+.login-wrap{min-height:100vh;height:100vh;background:var(--eng-dark);display:flex;flex-direction:column}
+@media(min-width:700px){.login-wrap{flex-direction:row}}
+.login-left{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem 1rem;border-bottom:1px solid rgba(255,255,255,0.07)}
+@media(max-width:699px){.login-wrap{flex-direction:column-reverse}.login-left{padding:1rem;border-bottom:none;border-top:1px solid rgba(255,255,255,0.07)}.login-right{padding:1.5rem 1rem}}.login-left svg{width:100px}@media(min-width:700px){.login-left{border-bottom:none;border-right:1px solid rgba(255,255,255,0.07)}}
+.login-right{display:flex;align-items:center;justify-content:center;padding:2rem 1rem;background:var(--eng-dark)}
+@media(min-width:700px){.login-right{width:380px;flex-shrink:0}}
+.login-box{background:#fff;border-radius:8px;padding:2rem;width:100%;max-width:380px}
+.login-err{color:#dc3545;font-size:12px;margin-top:8px;text-align:center;display:none}
+
+/* APP */
+.app{display:flex;height:100vh;overflow:hidden}
+.sidebar{width:var(--sw);background:var(--eng-dark);display:flex;flex-direction:column;flex-shrink:0;position:fixed;left:0;top:0;height:100vh;z-index:200;transform:translateX(-100%);transition:transform 0.25s ease}
+.sidebar.open{transform:translateX(0)}
+@media(min-width:900px){.sidebar{position:relative;transform:none}}
+.sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:199}
+.sb-overlay.show{display:block}
+@media(min-width:900px){.sb-overlay{display:none!important}}
 .sb-brand{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:10px}
 .sb-logo{width:38px;height:38px;background:var(--eng-yellow);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.sb-logo img{width:32px;height:32px;object-fit:contain}
-.sb-brand-text{font-size:12px;font-weight:600;color:#fff;letter-spacing:1px;line-height:1.3}
-.sb-brand-sub{font-size:9px;color:var(--eng-yellow);letter-spacing:2px}
 .sb-user{padding:10px 16px;border-bottom:1px solid rgba(255,255,255,0.08)}
-.sb-user-name{font-size:11px;font-weight:500;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb-user-name{font-size:12px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sb-user-org{font-size:10px;color:rgba(255,255,255,0.35);margin-top:1px}
-.sb-nav{flex:1;padding:6px 0}
+.sb-nav{flex:1;padding:6px 0;overflow-y:auto}
 .nav-grp{font-size:10px;color:rgba(255,255,255,0.28);padding:10px 16px 4px;letter-spacing:1px;text-transform:uppercase}
-.nav-item{display:flex;align-items:center;gap:8px;padding:8px 16px;font-size:12px;color:rgba(255,255,255,0.55);cursor:pointer;border-left:3px solid transparent;transition:all 0.1s}
-.nav-item:hover{background:rgba(255,255,255,0.05);color:#fff}
-.nav-item.active{background:rgba(255,255,255,0.08);color:#fff;border-left-color:var(--eng-yellow)}
-.nav-item i{font-size:15px;width:16px;flex-shrink:0}
-.sb-footer{padding:10px 16px;border-top:1px solid rgba(255,255,255,0.08)}
-.btn-sair{display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,0.45);cursor:pointer;background:none;border:none}
+.nav-item{display:flex;align-items:center;gap:8px;padding:11px 16px;font-size:13px;color:rgba(255,255,255,0.55);cursor:pointer;border-left:3px solid transparent}
+.nav-item:hover,.nav-item.active{background:rgba(255,255,255,0.08);color:#fff}
+.nav-item.active{border-left-color:var(--eng-yellow)}
+.nav-item i{font-size:16px;width:18px;flex-shrink:0}
+.sb-footer{padding:12px 16px;border-top:1px solid rgba(255,255,255,0.08)}
+.btn-sair{display:flex;align-items:center;gap:6px;font-size:13px;color:rgba(255,255,255,0.45);cursor:pointer;background:none;border:none}
 .btn-sair:hover{color:#fff}
 
 /* MAIN */
-.main{flex:1;display:flex;flex-direction:column;overflow:hidden;background:#f4f6f9}
-.topbar{background:#fff;border-bottom:1px solid #e0e0e0;padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:48px;flex-shrink:0}
-.topbar-title{font-size:15px;font-weight:500;color:#333}
-.breadcrumb{font-size:11px;color:#aaa;display:flex;align-items:center;gap:4px;margin-top:1px}
-.breadcrumb strong{color:#666}
-.page{flex:1;overflow-y:auto;padding:16px 20px}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+.topbar{background:#fff;border-bottom:1px solid #e0e0e0;padding:0 16px;display:flex;align-items:center;justify-content:space-between;height:52px;flex-shrink:0;gap:8px}
+.topbar-left{display:flex;align-items:center;gap:10px;min-width:0}
+.hamburger{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:6px;cursor:pointer;color:#555;flex-shrink:0;background:none;border:none;font-size:20px}
+@media(min-width:900px){.hamburger{display:none}}
+.topbar-title{font-size:14px;font-weight:600;color:#333;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.page{flex:1;overflow-y:auto;padding:14px 16px;-webkit-overflow-scrolling:touch}
 
 /* SECTIONS */
-.sec{background:#fff;border:1px solid #e0e0e0;border-radius:4px;margin-bottom:10px;overflow:hidden}
-.sec-hdr{padding:9px 14px;background:#f8f9fa;border-bottom:1px solid #e0e0e0;display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none}
-.sec-title{font-size:13px;font-weight:500;color:#333;display:flex;align-items:center;gap:8px}
-.sec-title i{font-size:14px;color:var(--eng-dark)}
+.sec{background:#fff;border:1px solid #e0e0e0;border-radius:6px;margin-bottom:10px;overflow:hidden}
+.sec-hdr{padding:11px 14px;background:#f8f9fa;border-bottom:1px solid #e0e0e0;display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none}
+.sec-title{font-size:13px;font-weight:600;color:#333;display:flex;align-items:center;gap:8px}
+.sec-title i{font-size:15px;color:var(--eng-dark)}
 .sec-body{padding:14px}
 .sec-body.col{display:none}
-.chev{color:#aaa;font-size:13px;transition:transform 0.2s}
+.chev{color:#aaa;font-size:14px;transition:transform 0.2s}
 .chev.op{transform:rotate(180deg)}
 
 /* FORM */
 .fg{margin-bottom:0}
-.fg label{display:block;font-size:11px;color:#666;margin-bottom:3px;font-weight:500}
-.fg input,.fg select,.fg textarea{width:100%;padding:7px 10px;border:1px solid #ccc;border-radius:3px;font-size:13px;color:#333;background:#fff}
-.fg input:focus,.fg select:focus,.fg textarea:focus{outline:none;border-color:var(--eng-dark)}
+.fg label{display:block;font-size:11px;color:#666;margin-bottom:4px;font-weight:600;text-transform:uppercase;letter-spacing:0.3px}
+.fg input,.fg select,.fg textarea{width:100%;padding:10px 12px;border:1px solid #ccc;border-radius:4px;font-size:14px;color:#333;background:#fff;-webkit-appearance:none}
+.fg input:focus,.fg select:focus,.fg textarea:focus{outline:none;border-color:var(--eng-dark);box-shadow:0 0 0 3px rgba(26,42,74,0.1)}
 .fg input[readonly]{background:#f5f5f5;color:#777}
-.fg textarea{resize:vertical;min-height:80px}
+.fg textarea{resize:vertical;min-height:90px}
 .gr{display:grid;gap:10px;margin-bottom:10px}
+.gr1{grid-template-columns:1fr}
 .gr2{grid-template-columns:1fr 1fr}
 .gr3{grid-template-columns:1fr 1fr 1fr}
+@media(max-width:600px){.gr2,.gr3,.gr4{grid-template-columns:1fr}}
 .gr4{grid-template-columns:1fr 1fr 1fr 1fr}
+@media(min-width:601px) and (max-width:800px){.gr4{grid-template-columns:1fr 1fr}}
 
 /* BUTTONS */
-.btn{padding:7px 14px;border-radius:3px;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;border:1px solid #ccc;background:#fff;color:#333}
-.btn:hover{background:#f5f5f5}
+.btn{padding:10px 16px;border-radius:4px;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid #ccc;background:#fff;color:#333;min-height:42px}
 .btn-green{background:var(--eng-green);color:#fff;border-color:var(--eng-green)}
-.btn-green:hover{background:#1b5e20}
 .btn-red{background:var(--eng-red);color:#fff;border-color:var(--eng-red)}
 .btn-dark{background:var(--eng-dark);color:#fff;border-color:var(--eng-dark)}
-.btn-yellow{background:var(--eng-yellow);color:var(--eng-dark);border-color:var(--eng-yellow);font-weight:600}
-.btn-sm{padding:4px 10px;font-size:12px}
+.btn-yellow{background:var(--eng-yellow);color:var(--eng-dark);border-color:var(--eng-yellow);font-weight:700}
+.btn-sm{padding:6px 12px;font-size:12px;min-height:32px}
+.btn-block{width:100%}
 
 /* BADGES */
-.bdg{display:inline-flex;align-items:center;gap:4px;font-size:11px;padding:3px 8px;border-radius:3px;font-weight:500;border:1px solid}
+.bdg{display:inline-flex;align-items:center;gap:4px;font-size:11px;padding:4px 8px;border-radius:4px;font-weight:600;border:1px solid;white-space:nowrap}
 .bdg-P{background:#fff3cd;color:#856404;border-color:#ffc107}
 .bdg-A{background:#d4edda;color:#155724;border-color:#28a745}
 .bdg-C{background:#f8d7da;color:#721c24;border-color:#dc3545}
 .bdg-F{background:#cce5ff;color:#004085;border-color:#007bff}
 
 /* METRICS */
-.mtr-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
-.mtr{background:#fff;border:1px solid #e0e0e0;border-radius:4px;padding:12px 14px;border-top:3px solid var(--eng-dark)}
+.mtr-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px}
+@media(min-width:700px){.mtr-grid{grid-template-columns:repeat(4,1fr)}}
+.mtr{background:#fff;border:1px solid #e0e0e0;border-radius:6px;padding:14px;border-top:3px solid var(--eng-dark)}
 .mtr.y{border-top-color:var(--eng-yellow)}
 .mtr.g{border-top-color:#28a745}
 .mtr.b{border-top-color:#007bff}
-.mtr.r{border-top-color:#dc3545}
-.mtr-lbl{font-size:10px;color:#888;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px}
-.mtr-val{font-size:22px;font-weight:500}
+.mtr-lbl{font-size:11px;color:#888;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px}
+.mtr-val{font-size:26px;font-weight:700}
 
 /* SOL CARD */
-.sol{background:#fff;border:1px solid #e0e0e0;border-radius:4px;margin-bottom:8px;overflow:hidden}
-.sol-hdr{padding:10px 14px;background:#f8f9fa;border-bottom:1px solid #e0e0e0;display:flex;justify-content:space-between;align-items:center}
-.sol-placa{display:inline-block;background:var(--eng-dark);color:var(--eng-yellow);padding:3px 10px;border-radius:3px;font-size:12px;font-weight:600;letter-spacing:1px}
-.sol-meta{font-size:11px;color:#888;margin-top:3px}
+.sol{background:#fff;border:1px solid #e0e0e0;border-radius:6px;margin-bottom:10px;overflow:hidden}
+.sol-hdr{padding:12px 14px;background:#f8f9fa;border-bottom:1px solid #e0e0e0;display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.sol-placa{display:inline-block;background:var(--eng-dark);color:var(--eng-yellow);padding:3px 10px;border-radius:3px;font-size:13px;font-weight:700;letter-spacing:1px}
+.sol-meta{font-size:11px;color:#888;margin-top:4px}
 .sol-body{padding:12px 14px}
-.sol-info{display:grid;grid-template-columns:repeat(3,1fr);gap:6px 14px;font-size:12px}
-.sol-info-lbl{color:#888;font-size:11px;margin-bottom:1px}
-.sol-info-val{font-weight:500;color:#333}
-.retorno{background:#eef4ff;border-left:3px solid var(--eng-dark);padding:10px 12px;border-radius:0 3px 3px 0;margin-top:10px}
-.retorno-title{font-size:10px;font-weight:600;color:var(--eng-dark);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px;display:flex;align-items:center;gap:5px}
-.retorno-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px 14px;font-size:12px}
+.sol-info{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;font-size:13px}
+@media(min-width:600px){.sol-info{grid-template-columns:repeat(3,1fr)}}
+.sol-info-lbl{color:#888;font-size:11px;margin-bottom:2px}
+.sol-info-val{font-weight:600;color:#333}
+.retorno{background:#eef4ff;border-left:3px solid var(--eng-dark);padding:10px 12px;border-radius:0 4px 4px 0;margin-top:10px}
+.retorno-title{font-size:10px;font-weight:700;color:var(--eng-dark);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;display:flex;align-items:center;gap:5px}
+.retorno-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;font-size:13px}
 .agend-body{padding:12px 14px;border-top:1px solid #e0e0e0;background:#fafafa}
-.agend-lbl{font-size:10px;font-weight:600;color:#555;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;display:flex;align-items:center;gap:5px}
+.agend-lbl{font-size:11px;font-weight:700;color:#555;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px;display:flex;align-items:center;gap:6px}
 
-/* DATA TABLE */
-.tbl{width:100%;border-collapse:collapse;font-size:12px}
-.tbl th{background:#f8f9fa;border:1px solid #dee2e6;padding:7px 10px;text-align:left;font-weight:500;color:#555;font-size:11px}
-.tbl td{border:1px solid #dee2e6;padding:7px 10px;color:#333}
-.tbl tr:hover td{background:#f8f9fa}
+/* TABLE */
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;min-width:600px}
+.tbl th{background:#f8f9fa;border:1px solid #dee2e6;padding:8px 10px;text-align:left;font-weight:600;color:#555;font-size:11px}
+.tbl td{border:1px solid #dee2e6;padding:8px 10px;color:#333}
 
 /* PILL */
-.pill{display:inline-flex;align-items:center;font-size:11px;padding:2px 7px;border-radius:3px}
+.pill{display:inline-flex;font-size:11px;padding:2px 8px;border-radius:3px}
 .pill-base{background:#cce5ff;color:#004085}
 .pill-agendador{background:#d4edda;color:#155724}
 .pill-supervisor{background:#fff3cd;color:#856404}
 
 /* FILTER */
-.fbar{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;align-items:center}
-.fbar select,.fbar input{font-size:12px;padding:6px 10px;border:1px solid #ccc;border-radius:3px;background:#fff;color:#333}
+.fbar{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.fbar select,.fbar input{font-size:13px;padding:8px 10px;border:1px solid #ccc;border-radius:4px;background:#fff;color:#333;min-height:38px;-webkit-appearance:none}
+.fbar input{flex:1;min-width:120px}
 
 /* PAGE HEADER */
-.phdr{background:#fff;border:1px solid #e0e0e0;border-radius:4px;padding:11px 14px;margin-bottom:10px}
-.phdr h1{font-size:17px;font-weight:400;color:#333}
-.phdr .bc{font-size:11px;color:#aaa;margin-top:2px;display:flex;align-items:center;gap:4px}
+.phdr{background:#fff;border:1px solid #e0e0e0;border-radius:6px;padding:12px 14px;margin-bottom:12px}
+.phdr h1{font-size:18px;font-weight:600;color:#333}
 
 /* TOAST */
-.toast{position:fixed;bottom:16px;right:16px;padding:9px 14px;border-radius:4px;font-size:12px;opacity:0;transition:opacity 0.3s;z-index:999;display:flex;align-items:center;gap:7px;color:#fff}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);padding:12px 18px;border-radius:6px;font-size:13px;font-weight:500;opacity:0;transition:opacity 0.3s;z-index:9999;display:flex;align-items:center;gap:8px;color:#fff;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,0.25)}
 .toast.show{opacity:1}
 
-/* LOGIN */
-.login-wrap{min-height:660px;background:var(--eng-dark);display:flex;border-radius:8px;overflow:hidden}
-.login-left{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;border-right:1px solid rgba(255,255,255,0.07)}
-.login-right{width:360px;display:flex;align-items:center;justify-content:center;padding:2rem;flex-shrink:0}
-.login-box{background:#fff;border-radius:6px;padding:1.75rem;width:100%}
-.login-err{color:#dc3545;font-size:12px;margin-top:8px;text-align:center;display:none}
-
-/* LOGO SVG inline */
-.logo-engelmig{width:140px;height:auto}
+/* PWA install prompt */
+.install-bar{background:var(--eng-yellow);color:var(--eng-dark);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;font-size:13px;font-weight:600;gap:8px}
 </style>
-
-<h2 class="sr-only">Engelmig Energia — Sistema de Gestão de Manutenção de Frotas</h2>
+</head>
+<body>
 
 <!-- LOGIN -->
 <div id="screen-login">
   <div class="login-wrap">
     <div class="login-left">
-      <!-- Logo Engelmig SVG inline fiel ao original -->
-      <svg class="logo-engelmig" viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Engelmig Energia">
-        <title>Engelmig Energia</title>
-        <!-- Raio amarelo -->
-        <polygon points="95,10 70,90 90,90 65,170 130,70 105,70 125,10" fill="#F5C400"/>
-        <!-- Raio vermelho (parte direita) -->
-        <polygon points="110,10 85,90 105,90 80,170 145,70 120,70 140,10" fill="#D32F2F" opacity="0.85"/>
-        <!-- Texto ENGELMIG -->
-        <text x="100" y="155" font-family="Arial Black, Arial" font-weight="900" font-size="22" fill="#1a1a1a" text-anchor="middle" letter-spacing="1">ENGELMIG</text>
-        <!-- Texto ENERGIA -->
-        <text x="100" y="172" font-family="Arial, sans-serif" font-weight="700" font-size="13" fill="#2E7D32" text-anchor="middle" letter-spacing="3">ENERGIA</text>
+      <svg viewBox="0 0 200 200" width="160" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="90,15 62,95 82,95 55,175 128,78 104,78 128,15" fill="#F5C400"/>
+        <polygon points="108,15 80,95 100,95 73,175 146,78 122,78 146,15" fill="#D32F2F" opacity="0.88"/>
+        <text x="100" y="158" font-family="Arial Black,Arial" font-weight="900" font-size="22" fill="#ffffff" text-anchor="middle" letter-spacing="1">ENGELMIG</text>
+        <text x="100" y="176" font-family="Arial,sans-serif" font-weight="700" font-size="13" fill="#F5C400" text-anchor="middle" letter-spacing="3">ENERGIA</text>
       </svg>
-
-      <div style="margin-top:32px;text-align:center">
-        <div style="font-size:13px;color:rgba(255,255,255,0.45);margin-bottom:24px;letter-spacing:0.5px">Gestão de Manutenção de Frotas</div>
-        <div style="width:40px;height:1px;background:rgba(255,255,255,0.15);margin:0 auto 24px"></div>
-        <div style="display:flex;gap:24px;justify-content:center">
-          <div style="text-align:center">
-            <div style="font-size:26px;font-weight:700;color:var(--eng-yellow)" id="cnt-total">0</div>
-            <div style="font-size:10px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:1px;margin-top:2px">Solicitações</div>
-          </div>
-          <div style="width:1px;background:rgba(255,255,255,0.1)"></div>
-          <div style="text-align:center">
-            <div style="font-size:26px;font-weight:700;color:#28a745" id="cnt-agend">0</div>
-            <div style="font-size:10px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:1px;margin-top:2px">Agendados</div>
-          </div>
-          <div style="width:1px;background:rgba(255,255,255,0.1)"></div>
-          <div style="text-align:center">
-            <div style="font-size:26px;font-weight:700;color:#ffc107" id="cnt-pend">0</div>
-            <div style="font-size:10px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:1px;margin-top:2px">Pendentes</div>
-          </div>
-        </div>
+      <p style="color:rgba(255,255,255,0.45);font-size:13px;margin-top:16px;text-align:center">Gestão de Manutenção de Frotas</p>
+      <div style="display:flex;gap:24px;margin-top:28px">
+        <div style="text-align:center"><div style="font-size:28px;font-weight:700;color:var(--eng-yellow)" id="cnt-total">0</div><div style="font-size:10px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:1px;margin-top:2px">Total</div></div>
+        <div style="width:1px;background:rgba(255,255,255,0.1)"></div>
+        <div style="text-align:center"><div style="font-size:28px;font-weight:700;color:#28a745" id="cnt-agend">0</div><div style="font-size:10px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:1px;margin-top:2px">Agendados</div></div>
+        <div style="width:1px;background:rgba(255,255,255,0.1)"></div>
+        <div style="text-align:center"><div style="font-size:28px;font-weight:700;color:#ffc107" id="cnt-pend">0</div><div style="font-size:10px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:1px;margin-top:2px">Pendentes</div></div>
       </div>
     </div>
-
     <div class="login-right">
       <div class="login-box">
         <div style="text-align:center;margin-bottom:1.2rem">
-          <svg viewBox="0 0 160 60" width="130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <polygon points="58,4 44,42 56,42 38,58 82,22 68,22 80,4" fill="#F5C400"/>
-            <polygon points="68,4 54,42 66,42 48,58 92,22 78,22 90,4" fill="#D32F2F" opacity="0.85"/>
-            <text x="100" y="30" font-family="Arial Black,Arial" font-weight="900" font-size="16" fill="#1a1a1a" text-anchor="middle" letter-spacing="0.5">ENGELMIG</text>
-            <text x="100" y="46" font-family="Arial,sans-serif" font-weight="700" font-size="9" fill="#2E7D32" text-anchor="middle" letter-spacing="2">ENERGIA</text>
+          <svg viewBox="0 0 160 55" width="120" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="52,4 38,40 50,40 34,52 76,20 62,20 74,4" fill="#F5C400"/>
+            <polygon points="62,4 48,40 60,40 44,52 86,20 72,20 84,4" fill="#D32F2F" opacity="0.88"/>
+            <text x="110" y="28" font-family="Arial Black,Arial" font-weight="900" font-size="15" fill="#1a2a4a" text-anchor="middle" letter-spacing="0.5">ENGELMIG</text>
+            <text x="110" y="44" font-family="Arial,sans-serif" font-weight="700" font-size="9" fill="#2E7D32" text-anchor="middle" letter-spacing="2">ENERGIA</text>
           </svg>
-          <div style="font-size:13px;font-weight:500;color:#333;margin-top:8px">Bem-vindo ao sistema</div>
-          <div style="font-size:11px;color:#888;margin-top:3px">Insira suas credenciais para continuar</div>
+          <div style="font-size:15px;font-weight:600;color:#333;margin-top:10px">Bem-vindo</div>
+          <div style="font-size:12px;color:#888;margin-top:3px">Insira suas credenciais</div>
         </div>
-        <div style="height:1px;background:#e0e0e0;margin:14px 0"></div>
-        <div class="fg" style="margin-bottom:10px">
-          <label><i class="ti ti-user" style="font-size:11px;vertical-align:-1px" aria-hidden="true"></i> Usuário</label>
-          <input id="login-user" placeholder="seu.usuario" onkeydown="if(event.key==='Enter')doLogin()">
-        </div>
-        <div class="fg" style="margin-bottom:14px">
-          <label><i class="ti ti-lock" style="font-size:11px;vertical-align:-1px" aria-hidden="true"></i> Senha</label>
-          <input id="login-pass" type="password" placeholder="••••••" onkeydown="if(event.key==='Enter')doLogin()">
-        </div>
-        <button class="btn btn-dark" style="width:100%;justify-content:center;padding:9px;font-size:13px" onclick="doLogin()">
-          <i class="ti ti-login" aria-hidden="true"></i> Entrar
-        </button>
-        <p id="login-err" class="login-err"><i class="ti ti-alert-circle" aria-hidden="true"></i> Usuário ou senha incorretos.</p>
-        <div style="margin-top:12px;padding:9px 10px;background:#f8f9fa;border-radius:3px;font-size:11px;color:#888;border:1px solid #e8e8e8">
-          <strong style="color:#555">Demo:</strong> agendador/agend123 · supervisor/sup123 · base01/base123
-        </div>
+        <div style="height:1px;background:#e8e8e8;margin:14px 0"></div>
+        <div class="fg" style="margin-bottom:12px"><label>Usuário</label><input id="login-user" placeholder="seu.usuario" autocomplete="username" onkeydown="if(event.key==='Enter')doLogin()"></div>
+        <div class="fg" style="margin-bottom:16px"><label>Senha</label><input id="login-pass" type="password" placeholder="••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"></div>
+        <button class="btn btn-dark btn-block" onclick="doLogin()"><i class="ti ti-login"></i> Entrar</button>
+        <p id="login-err" class="login-err"><i class="ti ti-alert-circle"></i> Usuário ou senha incorretos.</p>
       </div>
     </div>
   </div>
@@ -210,41 +196,42 @@ body{font-family:var(--font-sans);font-size:13px;color:#333;background:transpare
 
 <!-- APP -->
 <div id="screen-app" class="hidden">
+  <div class="sb-overlay" id="sb-overlay" onclick="closeSidebar()"></div>
   <div class="app">
-    <div class="sidebar">
+    <div class="sidebar" id="sidebar">
       <div class="sb-brand">
         <div class="sb-logo">
-          <svg viewBox="0 0 40 40" width="30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <polygon points="18,4 10,22 16,22 8,36 30,16 22,16 28,4" fill="#1a2a4a"/>
-            <polygon points="22,4 14,22 20,22 12,36 34,16 26,16 32,4" fill="#D32F2F" opacity="0.8"/>
+          <svg viewBox="0 0 40 40" width="26" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="17,4 9,22 15,22 7,36 29,16 21,16 27,4" fill="#1a2a4a"/>
+            <polygon points="21,4 13,22 19,22 11,36 33,16 25,16 31,4" fill="#D32F2F" opacity="0.8"/>
           </svg>
         </div>
         <div>
-          <div class="sb-brand-text">ENGELMIG</div>
-          <div class="sb-brand-sub">ENERGIA</div>
+          <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:1px">ENGELMIG</div>
+          <div style="font-size:9px;color:var(--eng-yellow);letter-spacing:2px">ENERGIA</div>
         </div>
+        <button onclick="closeSidebar()" style="margin-left:auto;background:none;border:none;color:rgba(255,255,255,0.4);font-size:20px;cursor:pointer;display:block" class="close-sb-btn"><i class="ti ti-x"></i></button>
       </div>
       <div class="sb-user">
         <div class="sb-user-name" id="sb-name">Usuário</div>
-        <div class="sb-user-org">234550 - ENGELMIG ...</div>
+        <div class="sb-user-org">234550 - ENGELMIG</div>
       </div>
       <div class="sb-nav" id="sb-nav"></div>
       <div class="sb-footer">
-        <button class="btn-sair" onclick="doLogout()"><i class="ti ti-logout" style="font-size:14px" aria-hidden="true"></i> Sair</button>
+        <button class="btn-sair" onclick="doLogout()"><i class="ti ti-logout"></i> Sair do sistema</button>
       </div>
     </div>
     <div class="main">
       <div class="topbar">
-        <div>
-          <div class="topbar-title" id="tb-title">Home</div>
-          <div class="breadcrumb">Home <i class="ti ti-chevron-right" style="font-size:10px" aria-hidden="true"></i> <strong id="tb-bc">Dashboard</strong></div>
-        </div>
-        <div style="display:flex;align-items:center;gap:12px">
-          <span style="font-size:11px;color:#aaa" id="tb-date"></span>
-          <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:#555">
-            <i class="ti ti-user-circle" style="font-size:17px;color:var(--eng-dark)" aria-hidden="true"></i>
-            <span id="tb-user"></span>
+        <div class="topbar-left">
+          <button class="hamburger" onclick="openSidebar()"><i class="ti ti-menu-2"></i></button>
+          <div>
+            <div class="topbar-title" id="tb-title">Home</div>
           </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+          <span style="font-size:11px;color:#aaa;display:none" id="tb-date"></span>
+          <i class="ti ti-user-circle" style="font-size:22px;color:var(--eng-dark)"></i>
         </div>
       </div>
       <div class="page" id="page"></div>
@@ -262,20 +249,37 @@ const DU=[
   {user:'base01',pass:'base123',nome:'BASE 01',perfil:'base'},
 ];
 
-async function loadAll(){
-  try{const r=await window.storage.get('eng2_sols',true);if(r&&r.value)sols=JSON.parse(r.value);}catch(e){sols=[];}
-  try{const r=await window.storage.get('eng2_users',true);if(r&&r.value)users=JSON.parse(r.value);else{users=[...DU];await saveUsers();}}catch(e){users=[...DU];await saveUsers();}
+// LocalStorage fallback (produção real usa backend)
+function lsGet(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):null;}catch(e){return null;}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+
+function loadAll(){
+  sols=lsGet('eng_sols')||[];
+  users=lsGet('eng_users')||[...DU];
   updCnt();
 }
-async function saveSols(){try{await window.storage.set('eng2_sols',JSON.stringify(sols),true);}catch(e){}}
-async function saveUsers(){try{await window.storage.set('eng2_users',JSON.stringify(users),true);}catch(e){}}
-function updCnt(){document.getElementById('cnt-total').textContent=sols.length;document.getElementById('cnt-agend').textContent=sols.filter(s=>s.status==='Agendado').length;document.getElementById('cnt-pend').textContent=sols.filter(s=>s.status==='Pendente').length;}
-function toast(msg,ok=true){const t=document.getElementById('toast');t.innerHTML=`<i class="ti ti-${ok?'check':'alert-circle'}" aria-hidden="true"></i>${msg}`;t.style.background=ok?'#28a745':'#dc3545';t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+function saveSols(){lsSet('eng_sols',sols);}
+function saveUsers(){lsSet('eng_users',users);}
+function updCnt(){
+  document.getElementById('cnt-total').textContent=sols.length;
+  document.getElementById('cnt-agend').textContent=sols.filter(s=>s.status==='Agendado').length;
+  document.getElementById('cnt-pend').textContent=sols.filter(s=>s.status==='Pendente').length;
+}
+
+function toast(msg,ok=true){
+  const t=document.getElementById('toast');
+  t.innerHTML=`<i class="ti ti-${ok?'check':'alert-circle'}"></i>${msg}`;
+  t.style.background=ok?'#28a745':'#dc3545';
+  t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);
+}
 function hide(id){document.getElementById(id).classList.add('hidden');}
 function show(id){document.getElementById(id).classList.remove('hidden');}
 function bdg(s){return{Pendente:'bdg-P',Agendado:'bdg-A',Cancelado:'bdg-C','Concluído':'bdg-F'}[s]||'bdg-P';}
 function bic(s){return{Pendente:'ti-clock',Agendado:'ti-calendar-check',Cancelado:'ti-x','Concluído':'ti-circle-check'}[s]||'ti-clock';}
 function tog(id){document.getElementById('b-'+id).classList.toggle('col');document.getElementById('c-'+id).classList.toggle('op');}
+
+function openSidebar(){document.getElementById('sidebar').classList.add('open');document.getElementById('sb-overlay').classList.add('show');}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sb-overlay').classList.remove('show');}
 
 function doLogin(){
   const u=document.getElementById('login-user').value.trim().toLowerCase();
@@ -285,8 +289,6 @@ function doLogin(){
   document.getElementById('login-err').style.display='none';
   me=f; hide('screen-login'); show('screen-app');
   document.getElementById('sb-name').textContent=f.nome;
-  document.getElementById('tb-user').textContent=f.nome;
-  document.getElementById('tb-date').textContent=new Date().toLocaleDateString('pt-BR');
   buildNav();
 }
 
@@ -297,12 +299,13 @@ const NAVS={
   agendador:[{id:'pendentes',icon:'ti-clock',label:'Pendentes'},{id:'todas',icon:'ti-calendar',label:'Todas Solicitações'}],
   supervisor:[{id:'dashboard',icon:'ti-home',label:'Home'},{id:'historico',icon:'ti-history',label:'Histórico'},{id:'usuarios',icon:'ti-users',label:'Usuários'}],
 };
-const TITLES={nova:'Autorização de Manutenção',minhas:'Minhas Solicitações',pendentes:'Solicitações Pendentes',todas:'Todas as Solicitações',dashboard:'Home',historico:'Histórico',usuarios:'Usuários'};
+const TITLES={nova:'Autorização de Manutenção',minhas:'Minhas Solicitações',pendentes:'Pendentes',todas:'Todas Solicitações',dashboard:'Home',historico:'Histórico',usuarios:'Usuários'};
 
 function buildNav(){
   const nav=NAVS[me.perfil];
   const grp={base:'Manutenção',agendador:'Agendamento',supervisor:'Administração'}[me.perfil];
-  document.getElementById('sb-nav').innerHTML=`<div class="nav-grp">${grp}</div>`+nav.map(n=>`<div class="nav-item" id="nav-${n.id}" onclick="go('${n.id}')"><i class="ti ${n.icon}" aria-hidden="true"></i>${n.label}</div>`).join('');
+  document.getElementById('sb-nav').innerHTML=`<div class="nav-grp">${grp}</div>`+
+    nav.map(n=>`<div class="nav-item" id="nav-${n.id}" onclick="go('${n.id}');closeSidebar()"><i class="ti ${n.icon}"></i>${n.label}</div>`).join('');
   go(nav[0].id);
 }
 
@@ -310,17 +313,14 @@ function go(id){
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   const el=document.getElementById('nav-'+id);if(el)el.classList.add('active');
   document.getElementById('tb-title').textContent=TITLES[id]||id;
-  document.getElementById('tb-bc').textContent=TITLES[id]||id;
   ({nova:pgNova,minhas:pgMinhas,pendentes:()=>pgAgend('Pendente'),todas:()=>pgAgend(''),dashboard:pgDash,historico:pgHist,usuarios:pgUsers})[id]?.();
 }
-
-function phdr(title,bc){return`<div class="phdr"><h1>${title}</h1><div class="bc">Home <i class="ti ti-chevron-right" style="font-size:10px" aria-hidden="true"></i> <strong>${bc}</strong></div></div>`;}
 
 function sec(id,icon,title,body,open=true){
   return`<div class="sec">
     <div class="sec-hdr" onclick="tog('${id}')">
-      <span class="sec-title"><i class="ti ${icon}" aria-hidden="true"></i>${title}</span>
-      <i class="ti ti-chevron-up chev ${open?'op':''}" id="c-${id}" aria-hidden="true"></i>
+      <span class="sec-title"><i class="ti ${icon}"></i>${title}</span>
+      <i class="ti ti-chevron-up chev ${open?'op':''}" id="c-${id}"></i>
     </div>
     <div class="sec-body ${open?'':'col'}" id="b-${id}">${body}</div>
   </div>`;
@@ -329,62 +329,64 @@ function sec(id,icon,title,body,open=true){
 function pgNova(){
   const cod='AM-'+String(Date.now()).slice(-7);
   document.getElementById('page').innerHTML=
-    phdr('Autorização de Manutenção','Nova Solicitação')+
+    `<div class="phdr"><h1>Autorização de Manutenção</h1></div>`+
     sec('gi','ti-info-circle','Informações Gerais',`
       <div class="gr gr2">
         <div class="fg"><label>Código da Autorização</label><input readonly value="${cod}" id="f-cod"></div>
         <div class="fg"><label>Status</label><input readonly value="Pendente"></div>
       </div>`)+
     sec('ve','ti-truck','Identificação do Veículo',`
-      <div class="gr gr4">
+      <div class="gr gr2">
         <div class="fg"><label>Placa</label><input id="f-placa" placeholder="ABC-1234" oninput="this.value=this.value.toUpperCase()"></div>
         <div class="fg"><label>Fabricante</label><input id="f-fab" placeholder="Ex: FORD"></div>
+      </div>
+      <div class="gr gr2">
         <div class="fg"><label>Modelo</label><input id="f-mod" placeholder="Ex: CARGO 1723"></div>
         <div class="fg"><label>Ano</label><input id="f-ano" type="number" placeholder="2023"></div>
       </div>
-      <div class="gr gr3">
+      <div class="gr gr2">
         <div class="fg"><label>UEN</label><input id="f-uen" placeholder="Ex: 0111 - ES STC/PLT"></div>
         <div class="fg"><label>Km Atual</label><input id="f-km" type="number" placeholder="Ex: 85000"></div>
+      </div>
+      <div class="gr gr1">
         <div class="fg"><label>Situação do Veículo</label><select id="f-sit"><option>Rodando</option><option>Parado</option><option>Oficina</option></select></div>
       </div>`)+
-    sec('mo','ti-user','Dados do Motorista / Responsável',`
-      <div class="gr gr3">
-        <div class="fg"><label>Nome Solicitante</label><input readonly value="${me.nome}" id="f-sol"></div>
-        <div class="fg"><label>Telefone</label><input id="f-tel" placeholder="(00) 00000-0000"></div>
-        <div class="fg"><label>E-mail</label><input id="f-email" placeholder="email@engelmig.com.br"></div>
-      </div>`)+
-    sec('of','ti-building-store','Dados do Estabelecimento / Oficina Sugerida',`
+    sec('mo','ti-user','Dados do Responsável',`
+      <div class="gr gr1">
+        <div class="fg"><label>Nome Solicitante</label><input readonly value="${me.nome}"></div>
+      </div>
       <div class="gr gr2">
-        <div class="fg"><label>Nome da Oficina Sugerida</label><input id="f-ofnome" placeholder="Nome do estabelecimento"></div>
+        <div class="fg"><label>Telefone</label><input id="f-tel" placeholder="(00) 00000-0000" type="tel"></div>
+        <div class="fg"><label>E-mail</label><input id="f-email" placeholder="email@engelmig.com.br" type="email"></div>
+      </div>`)+
+    sec('of','ti-building-store','Dados da Oficina Sugerida',`
+      <div class="gr gr2">
+        <div class="fg"><label>Nome da Oficina</label><input id="f-ofnome" placeholder="Nome do estabelecimento"></div>
         <div class="fg"><label>Data Desejada</label><input id="f-data" type="date"></div>
       </div>
-      <div class="gr gr3">
+      <div class="gr gr2">
         <div class="fg"><label>Contato na Oficina</label><input id="f-ofcont" placeholder="Nome do contato"></div>
-        <div class="fg"><label>Telefone da Oficina</label><input id="f-oftel" placeholder="(00) 0000-0000"></div>
-        <div class="fg"><label>E-mail da Oficina</label><input id="f-ofemail" placeholder="contato@oficina.com"></div>
+        <div class="fg"><label>Telefone da Oficina</label><input id="f-oftel" placeholder="(00) 0000-0000" type="tel"></div>
       </div>`)+
     sec('sv','ti-tool','Identificação do Serviço',`
       <div class="gr gr2">
         <div class="fg"><label>Tipo de Serviço</label>
           <select id="f-tipo"><option value="">- Selecione -</option><option>Revisão preventiva</option><option>Troca de óleo</option><option>Freios</option><option>Pneus</option><option>Suspensão</option><option>Elétrica</option><option>Funilaria/Pintura</option><option>Outros</option></select>
         </div>
-        <div class="fg"><label>Valor Máximo Aceitável (R$)</label><input id="f-valor" type="number" placeholder="0,00"></div>
+        <div class="fg"><label>Valor Máx. Aceitável (R$)</label><input id="f-valor" type="number" placeholder="0,00"></div>
       </div>`)+
     sec('ci','ti-notes','Informações Complementares',`
-      <div class="fg"><label>Relato / Descrição do Problema</label><textarea id="f-relato" placeholder="Descreva detalhadamente o problema..."></textarea></div>`)+
-    `<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-top:1px solid #e0e0e0;margin-top:4px">
-      <button class="btn" onclick="go('minhas')"><i class="ti ti-arrow-left" aria-hidden="true"></i> Voltar</button>
-      <div style="display:flex;gap:8px">
-        <button class="btn btn-red" onclick="go('nova')"><i class="ti ti-x" aria-hidden="true"></i> Cancelar Autorização</button>
-        <button class="btn btn-green" onclick="enviar()"><i class="ti ti-device-floppy" aria-hidden="true"></i> Salvar</button>
-      </div>
+      <div class="fg"><label>Relato / Descrição do Problema</label><textarea id="f-relato" placeholder="Descreva o problema..."></textarea></div>`)+
+    `<div style="display:flex;justify-content:space-between;gap:8px;padding:12px 0;border-top:1px solid #e0e0e0;margin-top:4px">
+      <button class="btn btn-red" onclick="go('minhas')"><i class="ti ti-x"></i> Cancelar</button>
+      <button class="btn btn-green" onclick="enviar()"><i class="ti ti-device-floppy"></i> Salvar</button>
     </div>`;
 }
 
 function enviar(){
   const placa=document.getElementById('f-placa').value.trim();
   const tipo=document.getElementById('f-tipo').value;
-  if(!placa||!tipo){toast('Preencha ao menos Placa e Tipo de Serviço.',false);return;}
+  if(!placa||!tipo){toast('Preencha Placa e Tipo de Serviço.',false);return;}
   sols.unshift({
     id:Date.now(),cod:document.getElementById('f-cod').value,
     placa,fab:document.getElementById('f-fab').value,mod:document.getElementById('f-mod').value,
@@ -393,36 +395,39 @@ function enviar(){
     solicitante:me.nome,sol_user:me.user,
     tel:document.getElementById('f-tel').value,email:document.getElementById('f-email').value,
     ofnome:document.getElementById('f-ofnome').value,data_des:document.getElementById('f-data').value,
-    ofcont:document.getElementById('f-ofcont').value,oftel:document.getElementById('f-oftel').value,ofemail:document.getElementById('f-ofemail').value,
+    ofcont:document.getElementById('f-ofcont').value,oftel:document.getElementById('f-oftel').value,
     tipo,valor:document.getElementById('f-valor').value,relato:document.getElementById('f-relato').value,
-    status:'Pendente',dt_cad:new Date().toLocaleDateString('pt-BR')+' '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}),
+    status:'Pendente',
+    dt_cad:new Date().toLocaleDateString('pt-BR')+' '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}),
     of_agendada:'',dt_agendada:'',protocolo:'',obs_agend:''
   });
-  saveSols(); toast('Autorização salva com sucesso!'); updCnt(); go('minhas');
+  saveSols();toast('Autorização salva!');updCnt();go('minhas');
 }
 
 function solCardBase(s){
   return`<div class="sol">
     <div class="sol-hdr">
-      <div><span class="sol-placa">${s.placa}</span> <span style="font-size:12px;color:#888;margin-left:8px">${s.tipo}</span>
-        <div class="sol-meta"><i class="ti ti-map-pin" style="font-size:10px" aria-hidden="true"></i> ${s.uen||'—'} &nbsp;·&nbsp; Cód: ${s.cod} &nbsp;·&nbsp; ${s.dt_cad}</div>
+      <div>
+        <span class="sol-placa">${s.placa}</span>
+        <span style="font-size:12px;color:#888;margin-left:8px">${s.tipo}</span>
+        <div class="sol-meta">${s.uen||'—'} · Cód: ${s.cod} · ${s.dt_cad}</div>
       </div>
-      <span class="bdg ${bdg(s.status)}"><i class="ti ${bic(s.status)}" aria-hidden="true"></i>${s.status}</span>
+      <span class="bdg ${bdg(s.status)}"><i class="ti ${bic(s.status)}"></i>${s.status}</span>
     </div>
     <div class="sol-body">
       <div class="sol-info">
-        <div><div class="sol-info-lbl">Fabricante / Modelo</div><div class="sol-info-val">${s.fab||'—'} ${s.mod||''}</div></div>
+        <div><div class="sol-info-lbl">Fabricante/Modelo</div><div class="sol-info-val">${s.fab||'—'} ${s.mod||''}</div></div>
         <div><div class="sol-info-lbl">Km</div><div class="sol-info-val">${s.km?Number(s.km).toLocaleString('pt-BR')+' km':'—'}</div></div>
         <div><div class="sol-info-lbl">Data desejada</div><div class="sol-info-val">${s.data_des||'—'}</div></div>
       </div>
       ${(s.of_agendada||s.dt_agendada||s.protocolo)?`
       <div class="retorno">
-        <div class="retorno-title"><i class="ti ti-calendar-check" aria-hidden="true"></i>Retorno do Agendamento</div>
+        <div class="retorno-title"><i class="ti ti-calendar-check"></i>Retorno do Agendamento</div>
         <div class="retorno-grid">
-          <div><div class="sol-info-lbl">Oficina Agendada</div><div class="sol-info-val">${s.of_agendada||'—'}</div></div>
-          <div><div class="sol-info-lbl">Data Agendada</div><div class="sol-info-val">${s.dt_agendada||'—'}</div></div>
-          <div><div class="sol-info-lbl">Protocolo Ticket Log</div><div class="sol-info-val">${s.protocolo||'—'}</div></div>
-          <div><div class="sol-info-lbl">Obs. Agendador</div><div class="sol-info-val">${s.obs_agend||'—'}</div></div>
+          <div><div class="sol-info-lbl">Oficina</div><div class="sol-info-val">${s.of_agendada||'—'}</div></div>
+          <div><div class="sol-info-lbl">Data</div><div class="sol-info-val">${s.dt_agendada||'—'}</div></div>
+          <div><div class="sol-info-lbl">Protocolo</div><div class="sol-info-val">${s.protocolo||'—'}</div></div>
+          <div><div class="sol-info-lbl">Obs.</div><div class="sol-info-val">${s.obs_agend||'—'}</div></div>
         </div>
       </div>`:''}
     </div>
@@ -431,16 +436,19 @@ function solCardBase(s){
 
 function pgMinhas(){
   const lista=sols.filter(s=>s.sol_user===me.user);
-  document.getElementById('page').innerHTML=phdr('Minhas Solicitações','Minhas Solicitações')+
-    (lista.length?lista.map(solCardBase).join(''):`<div style="text-align:center;padding:3rem;color:#aaa"><i class="ti ti-inbox" style="font-size:36px;display:block;margin-bottom:12px" aria-hidden="true"></i>Você ainda não tem solicitações.<br><br><button class="btn btn-green" onclick="go('nova')"><i class="ti ti-plus" aria-hidden="true"></i> Criar agora</button></div>`);
+  document.getElementById('page').innerHTML=
+    `<div class="phdr"><h1>Minhas Solicitações</h1></div>`+
+    (lista.length?lista.map(solCardBase).join(''):`<div style="text-align:center;padding:3rem;color:#aaa"><i class="ti ti-inbox" style="font-size:40px;display:block;margin-bottom:12px"></i>Nenhuma solicitação.<br><br><button class="btn btn-green" onclick="go('nova')"><i class="ti ti-plus"></i> Criar agora</button></div>`);
 }
 
 function pgAgend(fs){
   document.getElementById('page').innerHTML=
-    phdr(fs?'Solicitações Pendentes':'Todas as Solicitações',fs?'Pendentes':'Todas')+
-    `<div class="fbar">
-      <select id="ag-st" onchange="filAgend()"><option value="">Todos os status</option><option>Pendente</option><option>Agendado</option><option>Cancelado</option><option>Concluído</option></select>
-      <input id="ag-pl" placeholder="Buscar placa..." oninput="filAgend()" style="width:140px">
+    `<div class="phdr"><h1>${fs?'Pendentes':'Todas as Solicitações'}</h1></div>
+    <div class="fbar">
+      <select id="ag-st" onchange="filAgend()" style="flex:1">
+        <option value="">Todos os status</option><option>Pendente</option><option>Agendado</option><option>Cancelado</option><option>Concluído</option>
+      </select>
+      <input id="ag-pl" placeholder="Buscar placa..." oninput="filAgend()">
     </div>
     <div id="ag-lista"></div>`;
   if(fs) document.getElementById('ag-st').value=fs;
@@ -452,18 +460,20 @@ function filAgend(){
   const pl=(document.getElementById('ag-pl').value||'').toUpperCase();
   const lista=sols.filter(s=>(!st||s.status===st)&&(!pl||s.placa.includes(pl)));
   const el=document.getElementById('ag-lista');
-  if(!lista.length){el.innerHTML=`<div style="text-align:center;padding:2rem;color:#aaa"><i class="ti ti-inbox" style="font-size:32px;display:block;margin-bottom:8px" aria-hidden="true"></i>Nenhuma solicitação encontrada.</div>`;return;}
+  if(!lista.length){el.innerHTML=`<div style="text-align:center;padding:2rem;color:#aaa"><i class="ti ti-inbox" style="font-size:36px;display:block;margin-bottom:8px"></i>Nenhuma solicitação.</div>`;return;}
   el.innerHTML=lista.map(s=>`
     <div class="sol">
       <div class="sol-hdr">
-        <div><span class="sol-placa">${s.placa}</span> <span style="font-size:12px;color:#888;margin-left:8px">${s.tipo}</span>
-          <div class="sol-meta"><i class="ti ti-user" style="font-size:10px" aria-hidden="true"></i> ${s.solicitante} &nbsp;·&nbsp; ${s.uen||'—'} &nbsp;·&nbsp; ${s.dt_cad}</div>
+        <div>
+          <span class="sol-placa">${s.placa}</span>
+          <span style="font-size:12px;color:#888;margin-left:8px">${s.tipo}</span>
+          <div class="sol-meta">${s.solicitante} · ${s.uen||'—'} · ${s.dt_cad}</div>
         </div>
-        <span class="bdg ${bdg(s.status)}"><i class="ti ${bic(s.status)}" aria-hidden="true"></i>${s.status}</span>
+        <span class="bdg ${bdg(s.status)}"><i class="ti ${bic(s.status)}"></i>${s.status}</span>
       </div>
       <div class="sol-body">
         <div class="sol-info">
-          <div><div class="sol-info-lbl">Fabricante / Modelo</div><div class="sol-info-val">${s.fab||'—'} ${s.mod||''}</div></div>
+          <div><div class="sol-info-lbl">Fabricante/Modelo</div><div class="sol-info-val">${s.fab||'—'} ${s.mod||''}</div></div>
           <div><div class="sol-info-lbl">Km</div><div class="sol-info-val">${s.km?Number(s.km).toLocaleString('pt-BR')+' km':'—'}</div></div>
           <div><div class="sol-info-lbl">Data Desejada</div><div class="sol-info-val">${s.data_des||'—'}</div></div>
           <div><div class="sol-info-lbl">Oficina Sugerida</div><div class="sol-info-val">${s.ofnome||'—'}</div></div>
@@ -472,20 +482,20 @@ function filAgend(){
         </div>
       </div>
       <div class="agend-body">
-        <div class="agend-lbl"><i class="ti ti-edit" aria-hidden="true"></i>Preencher Agendamento</div>
+        <div class="agend-lbl"><i class="ti ti-edit"></i>Preencher Agendamento</div>
         <div class="gr gr2">
           <div class="fg"><label>Oficina Agendada</label><input value="${s.of_agendada}" onchange="upd(${s.id},'of_agendada',this.value)" placeholder="Nome da oficina"></div>
           <div class="fg"><label>Data Agendada</label><input type="date" value="${s.dt_agendada}" onchange="upd(${s.id},'dt_agendada',this.value)"></div>
         </div>
-        <div class="gr gr3">
+        <div class="gr gr2">
           <div class="fg"><label>Protocolo Ticket Log</label><input value="${s.protocolo}" onchange="upd(${s.id},'protocolo',this.value)" placeholder="Nº protocolo"></div>
           <div class="fg"><label>Status</label>
             <select onchange="upd(${s.id},'status',this.value)">
               ${['Pendente','Agendado','Cancelado','Concluído'].map(st=>`<option ${s.status===st?'selected':''}>${st}</option>`).join('')}
             </select>
           </div>
-          <div class="fg"><label>Obs. do Agendador</label><input value="${s.obs_agend}" onchange="upd(${s.id},'obs_agend',this.value)" placeholder="Observações..."></div>
         </div>
+        <div class="fg"><label>Obs. do Agendador</label><input value="${s.obs_agend}" onchange="upd(${s.id},'obs_agend',this.value)" placeholder="Observações..."></div>
       </div>
     </div>`).join('');
 }
@@ -493,37 +503,36 @@ function filAgend(){
 function pgDash(){
   const t=sols.length,p=sols.filter(s=>s.status==='Pendente').length,a=sols.filter(s=>s.status==='Agendado').length,c=sols.filter(s=>s.status==='Concluído').length;
   document.getElementById('page').innerHTML=
-    phdr('Home','Dashboard')+
-    `<div class="mtr-grid">
-      <div class="mtr navy"><div class="mtr-lbl">Total</div><div class="mtr-val">${t}</div></div>
+    `<div class="phdr"><h1>Home</h1></div>
+    <div class="mtr-grid">
+      <div class="mtr"><div class="mtr-lbl">Total</div><div class="mtr-val">${t}</div></div>
       <div class="mtr y"><div class="mtr-lbl">Pendentes</div><div class="mtr-val" style="color:#856404">${p}</div></div>
       <div class="mtr g"><div class="mtr-lbl">Agendados</div><div class="mtr-val" style="color:#155724">${a}</div></div>
       <div class="mtr b"><div class="mtr-lbl">Concluídos</div><div class="mtr-val" style="color:#004085">${c}</div></div>
     </div>
-    <div class="sec" style="margin-bottom:0">
-      <div class="sec-hdr"><span class="sec-title"><i class="ti ti-list" aria-hidden="true"></i>Últimas Solicitações</span></div>
+    <div class="sec">
+      <div class="sec-hdr"><span class="sec-title"><i class="ti ti-list"></i>Últimas Solicitações</span></div>
       <div class="sec-body" style="padding:0">
-        <table class="tbl">
-          <thead><tr><th>Cód.</th><th>Placa</th><th>Tipo</th><th>Solicitante</th><th>UEN</th><th>Data</th><th>Status</th></tr></thead>
+        <div class="tbl-wrap"><table class="tbl">
+          <thead><tr><th>Placa</th><th>Tipo</th><th>Solicitante</th><th>Status</th></tr></thead>
           <tbody>${sols.slice(0,10).map(s=>`<tr>
-            <td>${s.cod}</td>
-            <td><span class="sol-placa" style="font-size:11px;padding:2px 6px">${s.placa}</span></td>
-            <td>${s.tipo}</td><td>${s.solicitante}</td><td style="font-size:11px">${s.uen||'—'}</td><td>${s.dt_cad}</td>
-            <td><span class="bdg ${bdg(s.status)}" style="font-size:10px"><i class="ti ${bic(s.status)}" aria-hidden="true"></i>${s.status}</span></td>
+            <td><span class="sol-placa" style="font-size:11px;padding:2px 7px">${s.placa}</span></td>
+            <td>${s.tipo}</td><td>${s.solicitante}</td>
+            <td><span class="bdg ${bdg(s.status)}" style="font-size:10px"><i class="ti ${bic(s.status)}"></i>${s.status}</span></td>
           </tr>`).join('')}
-          ${!sols.length?`<tr><td colspan="7" style="text-align:center;padding:20px;color:#aaa">Nenhuma solicitação ainda.</td></tr>`:''}
+          ${!sols.length?`<tr><td colspan="4" style="text-align:center;padding:20px;color:#aaa">Nenhuma solicitação ainda.</td></tr>`:''}
           </tbody>
-        </table>
+        </table></div>
       </div>
     </div>`;
 }
 
 function pgHist(){
   document.getElementById('page').innerHTML=
-    phdr('Histórico','Histórico')+
-    `<div class="fbar">
-      <select id="hs-st" onchange="filHist()"><option value="">Todos os status</option><option>Pendente</option><option>Agendado</option><option>Cancelado</option><option>Concluído</option></select>
-      <input id="hs-pl" placeholder="Buscar placa..." oninput="filHist()" style="width:140px">
+    `<div class="phdr"><h1>Histórico</h1></div>
+    <div class="fbar">
+      <select id="hs-st" onchange="filHist()" style="flex:1"><option value="">Todos os status</option><option>Pendente</option><option>Agendado</option><option>Cancelado</option><option>Concluído</option></select>
+      <input id="hs-pl" placeholder="Buscar placa..." oninput="filHist()">
     </div>
     <div id="hs-lista"></div>`;
   filHist();
@@ -534,41 +543,41 @@ function filHist(){
   const pl=(document.getElementById('hs-pl').value||'').toUpperCase();
   const lista=sols.filter(s=>(!st||s.status===st)&&(!pl||s.placa.includes(pl)));
   const el=document.getElementById('hs-lista');
-  if(!lista.length){el.innerHTML=`<div style="text-align:center;padding:2rem;color:#aaa"><i class="ti ti-inbox" style="font-size:32px;display:block;margin-bottom:8px" aria-hidden="true"></i>Nenhuma solicitação encontrada.</div>`;return;}
-  el.innerHTML=`<div class="sec" style="margin-bottom:0"><div class="sec-body" style="padding:0">
-    <table class="tbl"><thead><tr><th>Cód.</th><th>Placa</th><th>Tipo</th><th>Solicitante</th><th>Oficina</th><th>Dt. Agendada</th><th>Protocolo</th><th>Status</th></tr></thead>
+  if(!lista.length){el.innerHTML=`<div style="text-align:center;padding:2rem;color:#aaa"><i class="ti ti-inbox" style="font-size:36px;display:block;margin-bottom:8px"></i>Nenhuma solicitação.</div>`;return;}
+  el.innerHTML=`<div class="sec"><div class="sec-body" style="padding:0"><div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>Cód.</th><th>Placa</th><th>Tipo</th><th>Solicitante</th><th>Oficina</th><th>Dt.Agend.</th><th>Protocolo</th><th>Status</th></tr></thead>
     <tbody>${lista.map(s=>`<tr>
       <td>${s.cod}</td>
-      <td><span class="sol-placa" style="font-size:11px;padding:2px 6px">${s.placa}</span></td>
+      <td><span class="sol-placa" style="font-size:11px;padding:2px 7px">${s.placa}</span></td>
       <td>${s.tipo}</td><td>${s.solicitante}</td>
       <td>${s.of_agendada||'—'}</td><td>${s.dt_agendada||'—'}</td><td>${s.protocolo||'—'}</td>
-      <td><span class="bdg ${bdg(s.status)}" style="font-size:10px"><i class="ti ${bic(s.status)}" aria-hidden="true"></i>${s.status}</span></td>
-    </tr>`).join('')}</tbody></table>
-  </div></div>`;
+      <td><span class="bdg ${bdg(s.status)}" style="font-size:10px"><i class="ti ${bic(s.status)}"></i>${s.status}</span></td>
+    </tr>`).join('')}</tbody>
+  </table></div></div></div>`;
 }
 
 function pgUsers(){
   document.getElementById('page').innerHTML=
-    phdr('Usuários','Gerenciar Usuários')+
-    `<div class="sec">
-      <div class="sec-hdr"><span class="sec-title"><i class="ti ti-users" aria-hidden="true"></i>Usuários Cadastrados</span></div>
-      <div class="sec-body" style="padding:0">
-        <table class="tbl"><thead><tr><th>Nome</th><th>Login</th><th>Perfil</th><th style="width:60px"></th></tr></thead>
-        <tbody id="users-tbody"></tbody></table>
-      </div>
+    `<div class="phdr"><h1>Usuários</h1></div>
+    <div class="sec">
+      <div class="sec-hdr"><span class="sec-title"><i class="ti ti-users"></i>Usuários Cadastrados</span></div>
+      <div class="sec-body" style="padding:0"><div class="tbl-wrap"><table class="tbl">
+        <thead><tr><th>Nome</th><th>Login</th><th>Perfil</th><th></th></tr></thead>
+        <tbody id="users-tbody"></tbody>
+      </table></div></div>
     </div>
     <div class="sec">
-      <div class="sec-hdr"><span class="sec-title"><i class="ti ti-user-plus" aria-hidden="true"></i>Adicionar Usuário</span></div>
+      <div class="sec-hdr"><span class="sec-title"><i class="ti ti-user-plus"></i>Adicionar Usuário</span></div>
       <div class="sec-body">
         <div class="gr gr2">
           <div class="fg"><label>Nome completo</label><input id="nu-nome" placeholder="Nome Sobrenome"></div>
-          <div class="fg"><label>Login</label><input id="nu-user" placeholder="nome.usuario"></div>
+          <div class="fg"><label>Login</label><input id="nu-user" placeholder="nome.usuario" autocomplete="off"></div>
         </div>
         <div class="gr gr2">
-          <div class="fg"><label>Senha</label><input id="nu-pass" type="password" placeholder="senha"></div>
+          <div class="fg"><label>Senha</label><input id="nu-pass" type="password" placeholder="senha" autocomplete="new-password"></div>
           <div class="fg"><label>Perfil</label><select id="nu-perfil"><option value="base">Base</option><option value="agendador">Agendador</option><option value="supervisor">Supervisor</option></select></div>
         </div>
-        <button class="btn btn-dark btn-sm" onclick="addUser()"><i class="ti ti-plus" aria-hidden="true"></i> Adicionar</button>
+        <button class="btn btn-dark btn-sm" onclick="addUser()"><i class="ti ti-plus"></i> Adicionar</button>
       </div>
     </div>`;
   renderUsers();
@@ -580,28 +589,30 @@ function renderUsers(){
     <td><strong>${u.nome}</strong></td>
     <td style="color:#888">${u.user}</td>
     <td><span class="pill pill-${u.perfil}">${u.perfil}</span></td>
-    <td>${u.user!=='supervisor'?`<button class="btn btn-sm" style="color:#dc3545;border-color:#dc3545;padding:3px 8px" onclick="remUser(${i})"><i class="ti ti-trash" aria-hidden="true"></i></button>`:''}</td>
+    <td>${u.user!=='supervisor'?`<button class="btn btn-sm" style="color:#dc3545;border-color:#dc3545;padding:3px 8px" onclick="remUser(${i})"><i class="ti ti-trash"></i></button>`:''}</td>
   </tr>`).join('');
 }
 
-async function addUser(){
+function addUser(){
   const nome=document.getElementById('nu-nome').value.trim();
   const user=document.getElementById('nu-user').value.trim();
   const pass=document.getElementById('nu-pass').value;
   const perfil=document.getElementById('nu-perfil').value;
   if(!nome||!user||!pass){toast('Preencha todos os campos.',false);return;}
   if(users.find(u=>u.user.toLowerCase()===user.toLowerCase())){toast('Usuário já existe.',false);return;}
-  users.push({user,pass,nome,perfil}); await saveUsers(); renderUsers();
+  users.push({user,pass,nome,perfil});saveUsers();renderUsers();
   ['nu-nome','nu-user','nu-pass'].forEach(id=>document.getElementById(id).value='');
   toast('Usuário adicionado!');
 }
 
-async function remUser(i){users.splice(i,1);await saveUsers();renderUsers();toast('Usuário removido.');}
+function remUser(i){users.splice(i,1);saveUsers();renderUsers();toast('Usuário removido.');}
 
-async function upd(id,field,value){
+function upd(id,field,value){
   const s=sols.find(x=>x.id===id);
-  if(s){s[field]=value;await saveSols();updCnt();toast('Salvo!');}
+  if(s){s[field]=value;saveSols();updCnt();toast('Salvo!');}
 }
 
 loadAll();
 </script>
+</body>
+</html>
