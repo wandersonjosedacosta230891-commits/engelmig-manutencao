@@ -233,6 +233,23 @@ let users = JSON.parse(localStorage.getItem('eng_users') || 'null') || [...DEFAU
 
 function saveUsers(){ localStorage.setItem('eng_users', JSON.stringify(users)); }
 
+// Restaura sessão ao recarregar
+function restoreSession(){
+  const saved = sessionStorage.getItem('eng_session');
+  if(saved){
+    const session = JSON.parse(saved);
+    const f = users.find(x=>x.user===session.user&&x.pass===session.pass);
+    if(f){
+      me=f;
+      hide('screen-login'); show('screen-app');
+      document.getElementById('sb-name').textContent=f.nome;
+      buildNav();
+      return true;
+    }
+  }
+  return false;
+}
+
 // Escuta solicitações em tempo real
 function listenSols() {
   const q = query(collection(db, 'solicitacoes'), orderBy('ts', 'desc'));
@@ -274,13 +291,15 @@ function doLogin(){
   const f=users.find(x=>x.user.toLowerCase()===u&&x.pass===p);
   if(!f){document.getElementById('login-err').style.display='block';return;}
   document.getElementById('login-err').style.display='none';
-  me=f; hide('screen-login'); show('screen-app');
+  me=f;
+  sessionStorage.setItem('eng_session', JSON.stringify({user:f.user, pass:f.pass}));
+  hide('screen-login'); show('screen-app');
   document.getElementById('sb-name').textContent=f.nome;
   buildNav();
 }
 window.doLogin=doLogin;
 
-function doLogout(){me=null;currentPage='';hide('screen-app');show('screen-login');}
+function doLogout(){me=null;currentPage='';sessionStorage.removeItem('eng_session');hide('screen-app');show('screen-login');}
 window.doLogout=doLogout;
 
 const NAVS={
@@ -613,6 +632,8 @@ window.remUser=remUser;
 
 // Inicia escuta em tempo real
 listenSols();
+// Tenta restaurar sessão
+setTimeout(restoreSession, 500);
 </script>
 </body>
 </html>
