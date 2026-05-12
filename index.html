@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Engelmig — Gestão de Manutenção</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 <style>
@@ -12,18 +11,14 @@
 :root{--eng-yellow:#F5C400;--eng-red:#D32F2F;--eng-green:#2E7D32;--eng-dark:#1a2a4a;--sw:220px}
 html,body{height:100%;min-height:100vh;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;font-size:14px;color:#333;background:#f4f6f9;overflow-x:hidden}
 .hidden{display:none!important}
-
-/* LOGIN */
-.login-wrap{min-height:100vh;height:100vh;background:var(--eng-dark);display:flex;flex-direction:column}
+.login-wrap{min-height:100vh;min-height:100dvh;background:var(--eng-dark);display:flex;flex-direction:column-reverse}
 @media(min-width:700px){.login-wrap{flex-direction:row}}
-.login-left{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem 1rem;border-bottom:1px solid rgba(255,255,255,0.07)}
-@media(max-width:699px){.login-wrap{flex-direction:column-reverse}.login-left{padding:1rem;border-bottom:none;border-top:1px solid rgba(255,255,255,0.07)}.login-right{padding:1.5rem 1rem}}.login-left svg{width:100px}@media(min-width:700px){.login-left{border-bottom:none;border-right:1px solid rgba(255,255,255,0.07)}}
-.login-right{display:flex;align-items:center;justify-content:center;padding:2rem 1rem;background:var(--eng-dark)}
-@media(min-width:700px){.login-right{width:380px;flex-shrink:0}}
-.login-box{background:#fff;border-radius:8px;padding:2rem;width:100%;max-width:380px}
+.login-left{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem 1rem;border-top:1px solid rgba(255,255,255,0.07)}
+@media(min-width:700px){.login-left{border-top:none;border-right:1px solid rgba(255,255,255,0.07);padding:2.5rem 2rem}}
+.login-right{display:flex;align-items:center;justify-content:center;padding:1.5rem 1rem;background:var(--eng-dark)}
+@media(min-width:700px){.login-right{width:380px;flex-shrink:0;padding:2rem}}
+.login-box{background:#fff;border-radius:8px;padding:1.75rem;width:100%;max-width:380px}
 .login-err{color:#dc3545;font-size:12px;margin-top:8px;text-align:center;display:none}
-
-/* APP */
 .app{display:flex;height:100vh;overflow:hidden}
 .sidebar{width:var(--sw);background:var(--eng-dark);display:flex;flex-direction:column;flex-shrink:0;position:fixed;left:0;top:0;height:100vh;z-index:200;transform:translateX(-100%);transition:transform 0.25s ease}
 .sidebar.open{transform:translateX(0)}
@@ -45,8 +40,6 @@ html,body{height:100%;min-height:100vh;font-family:-apple-system,BlinkMacSystemF
 .sb-footer{padding:12px 16px;border-top:1px solid rgba(255,255,255,0.08)}
 .btn-sair{display:flex;align-items:center;gap:6px;font-size:13px;color:rgba(255,255,255,0.45);cursor:pointer;background:none;border:none}
 .btn-sair:hover{color:#fff}
-
-/* MAIN */
 .main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
 .topbar{background:#fff;border-bottom:1px solid #e0e0e0;padding:0 16px;display:flex;align-items:center;justify-content:space-between;height:52px;flex-shrink:0;gap:8px}
 .topbar-left{display:flex;align-items:center;gap:10px;min-width:0}
@@ -54,8 +47,6 @@ html,body{height:100%;min-height:100vh;font-family:-apple-system,BlinkMacSystemF
 @media(min-width:900px){.hamburger{display:none}}
 .topbar-title{font-size:14px;font-weight:600;color:#333;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .page{flex:1;overflow-y:auto;padding:14px 16px;-webkit-overflow-scrolling:touch}
-
-/* SECTIONS */
 .sec{background:#fff;border:1px solid #e0e0e0;border-radius:6px;margin-bottom:10px;overflow:hidden}
 .sec-hdr{padding:11px 14px;background:#f8f9fa;border-bottom:1px solid #e0e0e0;display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none}
 .sec-title{font-size:13px;font-weight:600;color:#333;display:flex;align-items:center;gap:8px}
@@ -64,8 +55,6 @@ html,body{height:100%;min-height:100vh;font-family:-apple-system,BlinkMacSystemF
 .sec-body.col{display:none}
 .chev{color:#aaa;font-size:14px;transition:transform 0.2s}
 .chev.op{transform:rotate(180deg)}
-
-/* FORM */
 .fg{margin-bottom:0}
 .fg label{display:block;font-size:11px;color:#666;margin-bottom:4px;font-weight:600;text-transform:uppercase;letter-spacing:0.3px}
 .fg input,.fg select,.fg textarea{width:100%;padding:10px 12px;border:1px solid #ccc;border-radius:4px;font-size:14px;color:#333;background:#fff;-webkit-appearance:none}
@@ -76,27 +65,18 @@ html,body{height:100%;min-height:100vh;font-family:-apple-system,BlinkMacSystemF
 .gr1{grid-template-columns:1fr}
 .gr2{grid-template-columns:1fr 1fr}
 .gr3{grid-template-columns:1fr 1fr 1fr}
-@media(max-width:600px){.gr2,.gr3,.gr4{grid-template-columns:1fr}}
-.gr4{grid-template-columns:1fr 1fr 1fr 1fr}
-@media(min-width:601px) and (max-width:800px){.gr4{grid-template-columns:1fr 1fr}}
-
-/* BUTTONS */
+@media(max-width:600px){.gr2,.gr3{grid-template-columns:1fr}}
 .btn{padding:10px 16px;border-radius:4px;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid #ccc;background:#fff;color:#333;min-height:42px}
 .btn-green{background:var(--eng-green);color:#fff;border-color:var(--eng-green)}
 .btn-red{background:var(--eng-red);color:#fff;border-color:var(--eng-red)}
 .btn-dark{background:var(--eng-dark);color:#fff;border-color:var(--eng-dark)}
-.btn-yellow{background:var(--eng-yellow);color:var(--eng-dark);border-color:var(--eng-yellow);font-weight:700}
 .btn-sm{padding:6px 12px;font-size:12px;min-height:32px}
 .btn-block{width:100%}
-
-/* BADGES */
 .bdg{display:inline-flex;align-items:center;gap:4px;font-size:11px;padding:4px 8px;border-radius:4px;font-weight:600;border:1px solid;white-space:nowrap}
 .bdg-P{background:#fff3cd;color:#856404;border-color:#ffc107}
 .bdg-A{background:#d4edda;color:#155724;border-color:#28a745}
 .bdg-C{background:#f8d7da;color:#721c24;border-color:#dc3545}
 .bdg-F{background:#cce5ff;color:#004085;border-color:#007bff}
-
-/* METRICS */
 .mtr-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px}
 @media(min-width:700px){.mtr-grid{grid-template-columns:repeat(4,1fr)}}
 .mtr{background:#fff;border:1px solid #e0e0e0;border-radius:6px;padding:14px;border-top:3px solid var(--eng-dark)}
@@ -105,8 +85,6 @@ html,body{height:100%;min-height:100vh;font-family:-apple-system,BlinkMacSystemF
 .mtr.b{border-top-color:#007bff}
 .mtr-lbl{font-size:11px;color:#888;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px}
 .mtr-val{font-size:26px;font-weight:700}
-
-/* SOL CARD */
 .sol{background:#fff;border:1px solid #e0e0e0;border-radius:6px;margin-bottom:10px;overflow:hidden}
 .sol-hdr{padding:12px 14px;background:#f8f9fa;border-bottom:1px solid #e0e0e0;display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
 .sol-placa{display:inline-block;background:var(--eng-dark);color:var(--eng-yellow);padding:3px 10px;border-radius:3px;font-size:13px;font-weight:700;letter-spacing:1px}
@@ -121,34 +99,24 @@ html,body{height:100%;min-height:100vh;font-family:-apple-system,BlinkMacSystemF
 .retorno-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;font-size:13px}
 .agend-body{padding:12px 14px;border-top:1px solid #e0e0e0;background:#fafafa}
 .agend-lbl{font-size:11px;font-weight:700;color:#555;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px;display:flex;align-items:center;gap:6px}
-
-/* TABLE */
 .tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
-.tbl{width:100%;border-collapse:collapse;font-size:12px;min-width:600px}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;min-width:500px}
 .tbl th{background:#f8f9fa;border:1px solid #dee2e6;padding:8px 10px;text-align:left;font-weight:600;color:#555;font-size:11px}
 .tbl td{border:1px solid #dee2e6;padding:8px 10px;color:#333}
-
-/* PILL */
 .pill{display:inline-flex;font-size:11px;padding:2px 8px;border-radius:3px}
 .pill-base{background:#cce5ff;color:#004085}
 .pill-agendador{background:#d4edda;color:#155724}
 .pill-supervisor{background:#fff3cd;color:#856404}
-
-/* FILTER */
 .fbar{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
 .fbar select,.fbar input{font-size:13px;padding:8px 10px;border:1px solid #ccc;border-radius:4px;background:#fff;color:#333;min-height:38px;-webkit-appearance:none}
 .fbar input{flex:1;min-width:120px}
-
-/* PAGE HEADER */
 .phdr{background:#fff;border:1px solid #e0e0e0;border-radius:6px;padding:12px 14px;margin-bottom:12px}
 .phdr h1{font-size:18px;font-weight:600;color:#333}
-
-/* TOAST */
 .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);padding:12px 18px;border-radius:6px;font-size:13px;font-weight:500;opacity:0;transition:opacity 0.3s;z-index:9999;display:flex;align-items:center;gap:8px;color:#fff;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,0.25)}
 .toast.show{opacity:1}
-
-/* PWA install prompt */
-.install-bar{background:var(--eng-yellow);color:var(--eng-dark);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;font-size:13px;font-weight:600;gap:8px}
+.loading{text-align:center;padding:2rem;color:#888;font-size:13px}
+.loading i{font-size:24px;display:block;margin-bottom:8px;animation:spin 1s linear infinite}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
@@ -157,19 +125,19 @@ html,body{height:100%;min-height:100vh;font-family:-apple-system,BlinkMacSystemF
 <div id="screen-login">
   <div class="login-wrap">
     <div class="login-left">
-      <svg viewBox="0 0 200 200" width="160" xmlns="http://www.w3.org/2000/svg">
+      <svg viewBox="0 0 200 200" width="120" xmlns="http://www.w3.org/2000/svg">
         <polygon points="90,15 62,95 82,95 55,175 128,78 104,78 128,15" fill="#F5C400"/>
         <polygon points="108,15 80,95 100,95 73,175 146,78 122,78 146,15" fill="#D32F2F" opacity="0.88"/>
         <text x="100" y="158" font-family="Arial Black,Arial" font-weight="900" font-size="22" fill="#ffffff" text-anchor="middle" letter-spacing="1">ENGELMIG</text>
         <text x="100" y="176" font-family="Arial,sans-serif" font-weight="700" font-size="13" fill="#F5C400" text-anchor="middle" letter-spacing="3">ENERGIA</text>
       </svg>
       <p style="color:rgba(255,255,255,0.45);font-size:13px;margin-top:16px;text-align:center">Gestão de Manutenção de Frotas</p>
-      <div style="display:flex;gap:24px;margin-top:28px">
-        <div style="text-align:center"><div style="font-size:28px;font-weight:700;color:var(--eng-yellow)" id="cnt-total">0</div><div style="font-size:10px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:1px;margin-top:2px">Total</div></div>
+      <div style="display:flex;gap:24px;margin-top:20px">
+        <div style="text-align:center"><div style="font-size:26px;font-weight:700;color:var(--eng-yellow)" id="cnt-total">-</div><div style="font-size:10px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:1px;margin-top:2px">Total</div></div>
         <div style="width:1px;background:rgba(255,255,255,0.1)"></div>
-        <div style="text-align:center"><div style="font-size:28px;font-weight:700;color:#28a745" id="cnt-agend">0</div><div style="font-size:10px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:1px;margin-top:2px">Agendados</div></div>
+        <div style="text-align:center"><div style="font-size:26px;font-weight:700;color:#28a745" id="cnt-agend">-</div><div style="font-size:10px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:1px;margin-top:2px">Agendados</div></div>
         <div style="width:1px;background:rgba(255,255,255,0.1)"></div>
-        <div style="text-align:center"><div style="font-size:28px;font-weight:700;color:#ffc107" id="cnt-pend">0</div><div style="font-size:10px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:1px;margin-top:2px">Pendentes</div></div>
+        <div style="text-align:center"><div style="font-size:26px;font-weight:700;color:#ffc107" id="cnt-pend">-</div><div style="font-size:10px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:1px;margin-top:2px">Pendentes</div></div>
       </div>
     </div>
     <div class="login-right">
@@ -210,7 +178,7 @@ html,body{height:100%;min-height:100vh;font-family:-apple-system,BlinkMacSystemF
           <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:1px">ENGELMIG</div>
           <div style="font-size:9px;color:var(--eng-yellow);letter-spacing:2px">ENERGIA</div>
         </div>
-        <button onclick="closeSidebar()" style="margin-left:auto;background:none;border:none;color:rgba(255,255,255,0.4);font-size:20px;cursor:pointer;display:block" class="close-sb-btn"><i class="ti ti-x"></i></button>
+        <button onclick="closeSidebar()" style="margin-left:auto;background:none;border:none;color:rgba(255,255,255,0.4);font-size:20px;cursor:pointer"><i class="ti ti-x"></i></button>
       </div>
       <div class="sb-user">
         <div class="sb-user-name" id="sb-name">Usuário</div>
@@ -225,14 +193,9 @@ html,body{height:100%;min-height:100vh;font-family:-apple-system,BlinkMacSystemF
       <div class="topbar">
         <div class="topbar-left">
           <button class="hamburger" onclick="openSidebar()"><i class="ti ti-menu-2"></i></button>
-          <div>
-            <div class="topbar-title" id="tb-title">Home</div>
-          </div>
+          <div class="topbar-title" id="tb-title">Home</div>
         </div>
-        <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
-          <span style="font-size:11px;color:#aaa;display:none" id="tb-date"></span>
-          <i class="ti ti-user-circle" style="font-size:22px;color:var(--eng-dark)"></i>
-        </div>
+        <i class="ti ti-user-circle" style="font-size:22px;color:var(--eng-dark)"></i>
       </div>
       <div class="page" id="page"></div>
     </div>
@@ -241,45 +204,69 @@ html,body{height:100%;min-height:100vh;font-family:-apple-system,BlinkMacSystemF
 
 <div class="toast" id="toast"></div>
 
-<script>
-let sols=[], users=[], me=null;
-const DU=[
+<!-- Firebase SDK -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCjwrP-6J_K2tH2ahzq1af0CwXHilDt14Y",
+  authDomain: "engelmig-manutencao.firebaseapp.com",
+  projectId: "engelmig-manutencao",
+  storageBucket: "engelmig-manutencao.firebasestorage.app",
+  messagingSenderId: "410804869470",
+  appId: "1:410804869470:web:9a4a5b4ec48daf356e97cf"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const DEFAULT_USERS = [
   {user:'agendador',pass:'agend123',nome:'WANDERSON JOSE DA COSTA',perfil:'agendador'},
   {user:'supervisor',pass:'sup123',nome:'SUPERVISOR',perfil:'supervisor'},
   {user:'base01',pass:'base123',nome:'BASE 01',perfil:'base'},
 ];
 
-// LocalStorage fallback (produção real usa backend)
-function lsGet(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):null;}catch(e){return null;}}
-function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+let me = null;
+let sols = [];
+let users = JSON.parse(localStorage.getItem('eng_users') || 'null') || [...DEFAULT_USERS];
 
-function loadAll(){
-  sols=lsGet('eng_sols')||[];
-  users=lsGet('eng_users')||[...DU];
-  updCnt();
+function saveUsers(){ localStorage.setItem('eng_users', JSON.stringify(users)); }
+
+// Escuta solicitações em tempo real
+function listenSols() {
+  const q = query(collection(db, 'solicitacoes'), orderBy('ts', 'desc'));
+  onSnapshot(q, (snapshot) => {
+    sols = snapshot.docs.map(d => ({id: d.id, ...d.data()}));
+    updCnt();
+    if(me) refreshPage();
+  });
 }
-function saveSols(){lsSet('eng_sols',sols);}
-function saveUsers(){lsSet('eng_users',users);}
+
 function updCnt(){
-  document.getElementById('cnt-total').textContent=sols.length;
-  document.getElementById('cnt-agend').textContent=sols.filter(s=>s.status==='Agendado').length;
-  document.getElementById('cnt-pend').textContent=sols.filter(s=>s.status==='Pendente').length;
+  document.getElementById('cnt-total').textContent = sols.length;
+  document.getElementById('cnt-agend').textContent = sols.filter(s=>s.status==='Agendado').length;
+  document.getElementById('cnt-pend').textContent = sols.filter(s=>s.status==='Pendente').length;
 }
 
 function toast(msg,ok=true){
   const t=document.getElementById('toast');
   t.innerHTML=`<i class="ti ti-${ok?'check':'alert-circle'}"></i>${msg}`;
   t.style.background=ok?'#28a745':'#dc3545';
-  t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);
+  t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2500);
 }
 function hide(id){document.getElementById(id).classList.add('hidden');}
 function show(id){document.getElementById(id).classList.remove('hidden');}
 function bdg(s){return{Pendente:'bdg-P',Agendado:'bdg-A',Cancelado:'bdg-C','Concluído':'bdg-F'}[s]||'bdg-P';}
 function bic(s){return{Pendente:'ti-clock',Agendado:'ti-calendar-check',Cancelado:'ti-x','Concluído':'ti-circle-check'}[s]||'ti-clock';}
 function tog(id){document.getElementById('b-'+id).classList.toggle('col');document.getElementById('c-'+id).classList.toggle('op');}
-
 function openSidebar(){document.getElementById('sidebar').classList.add('open');document.getElementById('sb-overlay').classList.add('show');}
 function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sb-overlay').classList.remove('show');}
+
+window.tog=tog; window.openSidebar=openSidebar; window.closeSidebar=closeSidebar;
+
+let currentPage = '';
+function refreshPage(){ if(currentPage) go(currentPage, true); }
 
 function doLogin(){
   const u=document.getElementById('login-user').value.trim().toLowerCase();
@@ -291,8 +278,10 @@ function doLogin(){
   document.getElementById('sb-name').textContent=f.nome;
   buildNav();
 }
+window.doLogin=doLogin;
 
-function doLogout(){me=null;hide('screen-app');show('screen-login');updCnt();document.getElementById('login-user').value='';document.getElementById('login-pass').value='';}
+function doLogout(){me=null;currentPage='';hide('screen-app');show('screen-login');}
+window.doLogout=doLogout;
 
 const NAVS={
   base:[{id:'nova',icon:'ti-file-plus',label:'Autorização de Manutenção'},{id:'minhas',icon:'ti-list',label:'Minhas Solicitações'}],
@@ -309,12 +298,16 @@ function buildNav(){
   go(nav[0].id);
 }
 
-function go(id){
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  const el=document.getElementById('nav-'+id);if(el)el.classList.add('active');
-  document.getElementById('tb-title').textContent=TITLES[id]||id;
+function go(id, silent=false){
+  currentPage=id;
+  if(!silent){
+    document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+    const el=document.getElementById('nav-'+id);if(el)el.classList.add('active');
+    document.getElementById('tb-title').textContent=TITLES[id]||id;
+  }
   ({nova:pgNova,minhas:pgMinhas,pendentes:()=>pgAgend('Pendente'),todas:()=>pgAgend(''),dashboard:pgDash,historico:pgHist,usuarios:pgUsers})[id]?.();
 }
+window.go=go;
 
 function sec(id,icon,title,body,open=true){
   return`<div class="sec">
@@ -332,7 +325,7 @@ function pgNova(){
     `<div class="phdr"><h1>Autorização de Manutenção</h1></div>`+
     sec('gi','ti-info-circle','Informações Gerais',`
       <div class="gr gr2">
-        <div class="fg"><label>Código da Autorização</label><input readonly value="${cod}" id="f-cod"></div>
+        <div class="fg"><label>Código</label><input readonly value="${cod}" id="f-cod"></div>
         <div class="fg"><label>Status</label><input readonly value="Pendente"></div>
       </div>`)+
     sec('ve','ti-truck','Identificação do Veículo',`
@@ -348,13 +341,9 @@ function pgNova(){
         <div class="fg"><label>UEN</label><input id="f-uen" placeholder="Ex: 0111 - ES STC/PLT"></div>
         <div class="fg"><label>Km Atual</label><input id="f-km" type="number" placeholder="Ex: 85000"></div>
       </div>
-      <div class="gr gr1">
-        <div class="fg"><label>Situação do Veículo</label><select id="f-sit"><option>Rodando</option><option>Parado</option><option>Oficina</option></select></div>
-      </div>`)+
+      <div class="fg"><label>Situação do Veículo</label><select id="f-sit"><option>Rodando</option><option>Parado</option><option>Oficina</option></select></div>`)+
     sec('mo','ti-user','Dados do Responsável',`
-      <div class="gr gr1">
-        <div class="fg"><label>Nome Solicitante</label><input readonly value="${me.nome}"></div>
-      </div>
+      <div class="gr gr1"><div class="fg"><label>Nome Solicitante</label><input readonly value="${me.nome}"></div></div>
       <div class="gr gr2">
         <div class="fg"><label>Telefone</label><input id="f-tel" placeholder="(00) 00000-0000" type="tel"></div>
         <div class="fg"><label>E-mail</label><input id="f-email" placeholder="email@engelmig.com.br" type="email"></div>
@@ -373,7 +362,7 @@ function pgNova(){
         <div class="fg"><label>Tipo de Serviço</label>
           <select id="f-tipo"><option value="">- Selecione -</option><option>Revisão preventiva</option><option>Troca de óleo</option><option>Freios</option><option>Pneus</option><option>Suspensão</option><option>Elétrica</option><option>Funilaria/Pintura</option><option>Outros</option></select>
         </div>
-        <div class="fg"><label>Valor Máx. Aceitável (R$)</label><input id="f-valor" type="number" placeholder="0,00"></div>
+        <div class="fg"><label>Valor Máx. (R$)</label><input id="f-valor" type="number" placeholder="0,00"></div>
       </div>`)+
     sec('ci','ti-notes','Informações Complementares',`
       <div class="fg"><label>Relato / Descrição do Problema</label><textarea id="f-relato" placeholder="Descreva o problema..."></textarea></div>`)+
@@ -383,26 +372,30 @@ function pgNova(){
     </div>`;
 }
 
-function enviar(){
+async function enviar(){
   const placa=document.getElementById('f-placa').value.trim();
   const tipo=document.getElementById('f-tipo').value;
   if(!placa||!tipo){toast('Preencha Placa e Tipo de Serviço.',false);return;}
-  sols.unshift({
-    id:Date.now(),cod:document.getElementById('f-cod').value,
-    placa,fab:document.getElementById('f-fab').value,mod:document.getElementById('f-mod').value,
-    ano:document.getElementById('f-ano').value,uen:document.getElementById('f-uen').value,
-    km:document.getElementById('f-km').value,sit:document.getElementById('f-sit').value,
-    solicitante:me.nome,sol_user:me.user,
-    tel:document.getElementById('f-tel').value,email:document.getElementById('f-email').value,
-    ofnome:document.getElementById('f-ofnome').value,data_des:document.getElementById('f-data').value,
-    ofcont:document.getElementById('f-ofcont').value,oftel:document.getElementById('f-oftel').value,
-    tipo,valor:document.getElementById('f-valor').value,relato:document.getElementById('f-relato').value,
-    status:'Pendente',
-    dt_cad:new Date().toLocaleDateString('pt-BR')+' '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}),
-    of_agendada:'',dt_agendada:'',protocolo:'',obs_agend:''
-  });
-  saveSols();toast('Autorização salva!');updCnt();go('minhas');
+  try{
+    await addDoc(collection(db,'solicitacoes'),{
+      cod:document.getElementById('f-cod').value,
+      placa,fab:document.getElementById('f-fab').value,mod:document.getElementById('f-mod').value,
+      ano:document.getElementById('f-ano').value,uen:document.getElementById('f-uen').value,
+      km:document.getElementById('f-km').value,sit:document.getElementById('f-sit').value,
+      solicitante:me.nome,sol_user:me.user,
+      tel:document.getElementById('f-tel').value,email:document.getElementById('f-email').value,
+      ofnome:document.getElementById('f-ofnome').value,data_des:document.getElementById('f-data').value,
+      ofcont:document.getElementById('f-ofcont').value,oftel:document.getElementById('f-oftel').value,
+      tipo,valor:document.getElementById('f-valor').value,relato:document.getElementById('f-relato').value,
+      status:'Pendente',
+      dt_cad:new Date().toLocaleDateString('pt-BR')+' '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}),
+      ts:Date.now(),
+      of_agendada:'',dt_agendada:'',protocolo:'',obs_agend:''
+    });
+    toast('Autorização salva!'); go('minhas');
+  }catch(e){ toast('Erro ao salvar: '+e.message, false); }
 }
+window.enviar=enviar;
 
 function solCardBase(s){
   return`<div class="sol">
@@ -410,7 +403,7 @@ function solCardBase(s){
       <div>
         <span class="sol-placa">${s.placa}</span>
         <span style="font-size:12px;color:#888;margin-left:8px">${s.tipo}</span>
-        <div class="sol-meta">${s.uen||'—'} · Cód: ${s.cod} · ${s.dt_cad}</div>
+        <div class="sol-meta">${s.uen||'—'} · ${s.cod} · ${s.dt_cad}</div>
       </div>
       <span class="bdg ${bdg(s.status)}"><i class="ti ${bic(s.status)}"></i>${s.status}</span>
     </div>
@@ -454,12 +447,14 @@ function pgAgend(fs){
   if(fs) document.getElementById('ag-st').value=fs;
   filAgend();
 }
+window.filAgend=filAgend;
 
 function filAgend(){
-  const st=document.getElementById('ag-st').value;
-  const pl=(document.getElementById('ag-pl').value||'').toUpperCase();
+  const st=document.getElementById('ag-st')?.value||'';
+  const pl=(document.getElementById('ag-pl')?.value||'').toUpperCase();
   const lista=sols.filter(s=>(!st||s.status===st)&&(!pl||s.placa.includes(pl)));
   const el=document.getElementById('ag-lista');
+  if(!el) return;
   if(!lista.length){el.innerHTML=`<div style="text-align:center;padding:2rem;color:#aaa"><i class="ti ti-inbox" style="font-size:36px;display:block;margin-bottom:8px"></i>Nenhuma solicitação.</div>`;return;}
   el.innerHTML=lista.map(s=>`
     <div class="sol">
@@ -484,21 +479,29 @@ function filAgend(){
       <div class="agend-body">
         <div class="agend-lbl"><i class="ti ti-edit"></i>Preencher Agendamento</div>
         <div class="gr gr2">
-          <div class="fg"><label>Oficina Agendada</label><input value="${s.of_agendada}" onchange="upd(${s.id},'of_agendada',this.value)" placeholder="Nome da oficina"></div>
-          <div class="fg"><label>Data Agendada</label><input type="date" value="${s.dt_agendada}" onchange="upd(${s.id},'dt_agendada',this.value)"></div>
+          <div class="fg"><label>Oficina Agendada</label><input value="${s.of_agendada||''}" onchange="upd('${s.id}','of_agendada',this.value)" placeholder="Nome da oficina"></div>
+          <div class="fg"><label>Data Agendada</label><input type="date" value="${s.dt_agendada||''}" onchange="upd('${s.id}','dt_agendada',this.value)"></div>
         </div>
         <div class="gr gr2">
-          <div class="fg"><label>Protocolo Ticket Log</label><input value="${s.protocolo}" onchange="upd(${s.id},'protocolo',this.value)" placeholder="Nº protocolo"></div>
+          <div class="fg"><label>Protocolo Ticket Log</label><input value="${s.protocolo||''}" onchange="upd('${s.id}','protocolo',this.value)" placeholder="Nº protocolo"></div>
           <div class="fg"><label>Status</label>
-            <select onchange="upd(${s.id},'status',this.value)">
+            <select onchange="upd('${s.id}','status',this.value)">
               ${['Pendente','Agendado','Cancelado','Concluído'].map(st=>`<option ${s.status===st?'selected':''}>${st}</option>`).join('')}
             </select>
           </div>
         </div>
-        <div class="fg"><label>Obs. do Agendador</label><input value="${s.obs_agend}" onchange="upd(${s.id},'obs_agend',this.value)" placeholder="Observações..."></div>
+        <div class="fg"><label>Obs. do Agendador</label><input value="${s.obs_agend||''}" onchange="upd('${s.id}','obs_agend',this.value)" placeholder="Observações..."></div>
       </div>
     </div>`).join('');
 }
+
+async function upd(id, field, value){
+  try{
+    await updateDoc(doc(db,'solicitacoes',id), {[field]:value});
+    toast('Salvo!');
+  }catch(e){ toast('Erro: '+e.message, false); }
+}
+window.upd=upd;
 
 function pgDash(){
   const t=sols.length,p=sols.filter(s=>s.status==='Pendente').length,a=sols.filter(s=>s.status==='Agendado').length,c=sols.filter(s=>s.status==='Concluído').length;
@@ -533,21 +536,20 @@ function pgHist(){
     <div class="fbar">
       <select id="hs-st" onchange="filHist()" style="flex:1"><option value="">Todos os status</option><option>Pendente</option><option>Agendado</option><option>Cancelado</option><option>Concluído</option></select>
       <input id="hs-pl" placeholder="Buscar placa..." oninput="filHist()">
-    </div>
-    <div id="hs-lista"></div>`;
+    </div><div id="hs-lista"></div>`;
   filHist();
 }
+window.filHist=filHist;
 
 function filHist(){
-  const st=document.getElementById('hs-st').value;
-  const pl=(document.getElementById('hs-pl').value||'').toUpperCase();
+  const st=document.getElementById('hs-st')?.value||'';
+  const pl=(document.getElementById('hs-pl')?.value||'').toUpperCase();
   const lista=sols.filter(s=>(!st||s.status===st)&&(!pl||s.placa.includes(pl)));
-  const el=document.getElementById('hs-lista');
+  const el=document.getElementById('hs-lista');if(!el)return;
   if(!lista.length){el.innerHTML=`<div style="text-align:center;padding:2rem;color:#aaa"><i class="ti ti-inbox" style="font-size:36px;display:block;margin-bottom:8px"></i>Nenhuma solicitação.</div>`;return;}
   el.innerHTML=`<div class="sec"><div class="sec-body" style="padding:0"><div class="tbl-wrap"><table class="tbl">
-    <thead><tr><th>Cód.</th><th>Placa</th><th>Tipo</th><th>Solicitante</th><th>Oficina</th><th>Dt.Agend.</th><th>Protocolo</th><th>Status</th></tr></thead>
+    <thead><tr><th>Placa</th><th>Tipo</th><th>Solicitante</th><th>Oficina</th><th>Dt.Agend.</th><th>Protocolo</th><th>Status</th></tr></thead>
     <tbody>${lista.map(s=>`<tr>
-      <td>${s.cod}</td>
       <td><span class="sol-placa" style="font-size:11px;padding:2px 7px">${s.placa}</span></td>
       <td>${s.tipo}</td><td>${s.solicitante}</td>
       <td>${s.of_agendada||'—'}</td><td>${s.dt_agendada||'—'}</td><td>${s.protocolo||'—'}</td>
@@ -582,12 +584,12 @@ function pgUsers(){
     </div>`;
   renderUsers();
 }
+window.pgUsers=pgUsers;
 
 function renderUsers(){
   const el=document.getElementById('users-tbody');if(!el)return;
   el.innerHTML=users.map((u,i)=>`<tr>
-    <td><strong>${u.nome}</strong></td>
-    <td style="color:#888">${u.user}</td>
+    <td><strong>${u.nome}</strong></td><td style="color:#888">${u.user}</td>
     <td><span class="pill pill-${u.perfil}">${u.perfil}</span></td>
     <td>${u.user!=='supervisor'?`<button class="btn btn-sm" style="color:#dc3545;border-color:#dc3545;padding:3px 8px" onclick="remUser(${i})"><i class="ti ti-trash"></i></button>`:''}</td>
   </tr>`).join('');
@@ -600,19 +602,17 @@ function addUser(){
   const perfil=document.getElementById('nu-perfil').value;
   if(!nome||!user||!pass){toast('Preencha todos os campos.',false);return;}
   if(users.find(u=>u.user.toLowerCase()===user.toLowerCase())){toast('Usuário já existe.',false);return;}
-  users.push({user,pass,nome,perfil});saveUsers();renderUsers();
+  users.push({user,pass,nome,perfil}); saveUsers(); renderUsers();
   ['nu-nome','nu-user','nu-pass'].forEach(id=>document.getElementById(id).value='');
   toast('Usuário adicionado!');
 }
+window.addUser=addUser;
 
 function remUser(i){users.splice(i,1);saveUsers();renderUsers();toast('Usuário removido.');}
+window.remUser=remUser;
 
-function upd(id,field,value){
-  const s=sols.find(x=>x.id===id);
-  if(s){s[field]=value;saveSols();updCnt();toast('Salvo!');}
-}
-
-loadAll();
+// Inicia escuta em tempo real
+listenSols();
 </script>
 </body>
 </html>
